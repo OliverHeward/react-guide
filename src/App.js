@@ -34,31 +34,34 @@ class App extends Component {
   }
 
   togglePersonsHandler = () => {
-
+    const doesShow = this.state.showPersons;
+    this.setState({
+      showPersons: !doesShow
+    });
   }
 
   render() {
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map(person => {
+            return <Person 
+              name={person.name} 
+              age={person.age}/>
+          })}
+        </div>
+      );
+    }
 
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <button 
           onClick={this.togglePersonsHandler}
-          >Switch Name</button>
-        {this.state.showPersons ? 
-          <div>
-            <Person 
-              name={this.state.persons[0].name} 
-              age={this.state.persons[0].age}/>
-            <Person 
-              name={this.state.persons[1].name} 
-              age={this.state.persons[1].age}
-              click={this.switchNameHandler.bind(this, 'Ollie!!')}
-              changed={this.nameChangedHandler} >My Hobbies: Racing</Person>
-            <Person 
-              name={this.state.persons[2].name} 
-              age={this.state.persons[2].age}/>
-          </div> : null }
+          >Toggle Persons</button>
+          {persons}
       </div>
     );
   }
