@@ -64,6 +64,14 @@ class App extends Component {
   }
 
   render() {
+    let style = {
+        backgroundColor: 'green',
+        color: 'white',
+        font: 'inherit',
+        border: '1px solid blue',
+        padding: '8px',
+        cursor: 'pointer',
+    }
     let persons = null;
     const charList = this.state.userInput.split('').map((ch, index )=> {
       return <Char 
@@ -85,19 +93,34 @@ class App extends Component {
           })}
         </div>
       );
+
+      style.backgroundColor = 'red';
+    }
+
+    // Turning array of strings into a string.
+    // Assigns both classes together
+    const classes = [];
+
+    if (this.state.persons.length <= 2) {
+      classes.push('red'); // classes = red
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold'); // classes = red bold
     }
 
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>Dynamic color change</p>
         <button 
           onClick={this.togglePersonsHandler}
+          style={style}
           >Toggle Persons</button>
-          <input type="text" onChange={this.inputChangedHandler} value={this.state.userInput}/>
-          <p>{this.state.userInput}</p>
-          <Validation inputLength={this.state.userInput.length}/>
-          {charList}
-          {persons}
+        <input type="text" onChange={this.inputChangedHandler} value={this.state.userInput}/>
+        <p>{this.state.userInput}</p>
+        <Validation inputLength={this.state.userInput.length}/>
+        {charList}
+        {persons}
       </div>
     );
   }

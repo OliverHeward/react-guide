@@ -2,10 +2,11 @@
   text-align: center;
 }
 
-button {
-  background-color: white;
-  font-family: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
+.red {
+  color: red;
 }
+
+.bold {
+  font-weight: bold;
+}
+
