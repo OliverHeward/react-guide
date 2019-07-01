@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Persons from '../components/Persons/Persons';
+import WithClass from '../hoc/WithClass';
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class App extends Component {
     ],
     otherState: 'some other value',
     showPersons: false,
-    userInput: ''
+    userInput: '',
+    showCockpit: true,
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -34,6 +36,15 @@ class App extends Component {
 
   componentDidMount() {
     console.log('[App.js] componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
   }
 
   nameChangedHandler = (event, id) => {
@@ -89,12 +100,14 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
+        <button onClick={() => {this.setState({showCockpit:false})}}>Remove Cockpit</button>
+        {this.state.showCockpit ?
         <Cockpit 
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
-          persons={this.state.persons}
+          personsLength={this.state.persons.length}
           clicked={this.togglePersonsHandler}
-           />
+           /> : null }
         {persons}
       </div>
     );
