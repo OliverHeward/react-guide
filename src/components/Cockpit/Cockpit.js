@@ -1,15 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.css';
+import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
+    const toggleBtnRef = useRef(null);
+
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
         // Fake HTTP request
-        const timer = setTimeout(() => {
-            alert('Saved data to cloud!');
-        }, 1000);
+        // setTimeout(() => {
+        //     alert('Saved data to cloud!');
+        // }, 1000);
+        
+        toggleBtnRef.current.click();
+        // using useEffect, so that the click occurs after JSX is returned
         return () => {
-            clearTimeout(timer);
             console.log('[Cockpit.js] Clean up in useEffect');
         };
     }, []);
@@ -42,9 +47,14 @@ const cockpit = (props) => {
             <h1>{props.title}</h1>
             <p className={assignedClasses.join(' ')}>Dynamic color change</p>
             <button 
+                ref={toggleBtnRef}
                 onClick={props.clicked}
                 className={btnClass}
             >Toggle Persons</button>
+            <AuthContext.Consumer>
+                {context => <button
+                    onClick={context.login}>Log In</button> }
+            </AuthContext.Consumer>
         </div>
     );
 }
